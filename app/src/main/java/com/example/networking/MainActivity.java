@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String json) {
             Log.d("TAG", json);
             try {
-                mountainArrayList.clear();
                 JSONArray jsonArray = new JSONArray(json);
                 for (int i=0; i < jsonArray.length(); i++) // Goes through i in array based on length.
                 {
