@@ -21,7 +21,28 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    @SuppressLint("StaticFieldLeak")
+    public class ArrayList<Mountain> {
+
+//        private String ID;
+//        private String name;
+//        private String type;
+//        private String location;
+//        private String category;
+//        private Integer size;
+//        private Integer cost;
+//        private String img;
+//        private String aux;
+
+    }
+
+    public class ArrayAdapter<Mountain>{
+
+
+
+    }
+
+
+    @SuppressLint({"StaticFieldLeak"})
     private class JsonTask extends AsyncTask<String, String, String> {
 
         private HttpURLConnection connection = null;
