@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Networking</string>
+    <string name="button_execute">Execute JSON</string>
 </resources>
