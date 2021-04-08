@@ -13,13 +13,14 @@ public class Mountain {
 //        private String img;
 //        private String aux;
 
-        public Mountain (String ID, String name, String location, Integer height){
+        public Mountain (String ID, String name, String location, Integer height, String Type){
 //                mountainID,mountainName,mountainLocation,mountainHeight
 
-                String mountainID = ID;
-                String mountainName = name;
-                String mountainLocation = location;
-                Integer mountainHeight = height;
+                String   mountainID = ID;
+                String   mountainName = name;
+                String   mountainLocation = location;
+                Integer  mountainHeight = height;
+                String   mountainType = Type;
 
         }
 

@@ -33,22 +33,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
+    ArrayList<Mountain> mountainArrayList;
+    ArrayAdapter<Mountain> mountainArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        ArrayList<String> listData = new ArrayList<>();
+        mountainArrayList = new ArrayList<>();
 
-        ArrayAdapter<String> mountainAdapter =
-                new ArrayAdapter<String>(this, R.layout.layout_list_mountains, listData);
+        mountainArrayAdapter =
+                new ArrayAdapter<>(this, R.layout.layout_list_mountains, mountainArrayList);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ListView thelistview = (ListView) findViewById(R.id.my_listview);
-        thelistview.setAdapter(mountainAdapter);
+        thelistview.setAdapter(mountainArrayAdapter);
 
 
         thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Button button = findViewById(R.id.button_execute);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 new JsonTask().execute("https://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
 
             }
@@ -75,9 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
         private HttpURLConnection connection = null;
         private BufferedReader reader = null;
-
-        ArrayList<Mountain> arrayList;
-        ArrayAdapter<Mountain> mountainArrayAdapter;
 
         protected String doInBackground(String... params) {
             try {
@@ -117,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String json) {
             Log.d("TAG", json);
             try {
+                mountainArrayList.clear();
                 JSONArray jsonArray = new JSONArray(json);
                 for (int i=0; i < jsonArray.length(); i++) // Goes through i in array based on length.
                 {
@@ -124,12 +123,13 @@ public class MainActivity extends AppCompatActivity {
                             String mountainID = oneObject.getString("ID");
                             String mountainName = oneObject.getString("name");
                             String mountainLocation = oneObject.getString("location");
+                            String mountainType = "a17jespe"; // As requested on lenasys
                             Integer mountainHeight = oneObject.getInt("size");
-                    Mountain MountainInfo = new Mountain (mountainID,mountainName,mountainLocation,mountainHeight);
+                    Mountain MountainInfo = new Mountain (mountainID,mountainName,mountainLocation,mountainHeight, mountainType);
                     Log.e("JSON Stuff: ", String.valueOf(mountainArrayAdapter));
-//                    arrayList.add(MountainInfo);
+                    mountainArrayList.add(MountainInfo);
                 }
-//                mountainArrayAdapter.notifyDataSetChanged();
+                mountainArrayAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
                 Log.e("JSON Stuff: ",e.getMessage());
