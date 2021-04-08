@@ -3,6 +3,7 @@ package com.example.networking;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,19 +14,60 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
+
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        ArrayList<String> listData = new ArrayList<>();
+
+        ArrayAdapter<String> mountainAdapter =
+                new ArrayAdapter<String>(this, R.layout.layout_list_mountains, listData);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ListView thelistview = (ListView) findViewById(R.id.my_listview);
+        thelistview.setAdapter(mountainAdapter);
+
+
+        thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                Toast.makeText(getApplicationContext(),"Hello",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button button = findViewById(R.id.button_execute);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new JsonTask().execute("https://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
+
+            }
+        });
+
+    }
+
 
 
     @SuppressLint("StaticFieldLeak")
@@ -33,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
         private HttpURLConnection connection = null;
         private BufferedReader reader = null;
+
+        ArrayList<Mountain> arrayList;
+        ArrayAdapter<Mountain> mountainArrayAdapter;
 
         protected String doInBackground(String... params) {
             try {
@@ -71,44 +116,36 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String json) {
             Log.d("TAG", json);
+            try {
+                JSONArray jsonArray = new JSONArray(json);
+                for (int i=0; i < jsonArray.length(); i++) // Goes through i in array based on length.
+                {
+                    JSONObject oneObject = jsonArray.getJSONObject(i); //Assigns object to variable based on current object in the array jsonArray.
+                            String mountainID = oneObject.getString("ID");
+                            String mountainName = oneObject.getString("name");
+                            String mountainLocation = oneObject.getString("location");
+                            Integer mountainHeight = oneObject.getInt("size");
+                    Mountain MountainInfo = new Mountain (mountainID,mountainName,mountainLocation,mountainHeight);
+                    Log.e("JSON Stuff: ", String.valueOf(mountainArrayAdapter));
+//                    arrayList.add(MountainInfo);
+                }
+//                mountainArrayAdapter.notifyDataSetChanged();
+
+            } catch (JSONException e) {
+                Log.e("JSON Stuff: ",e.getMessage());
+            }
 
         }
     }
 
 
-    private String[] MountainNames = {"Ettan","Tvåan","Trean"};
-    private String[] MountainLocations = {"Norrut","Söderut","Västerut"};
-    private int[] MountainSizes = {90,270,360};
-    private ArrayList<String> listData = new ArrayList<>(Arrays.asList(MountainNames));
+//    private String[] MountainNames = {"Ettan","Tvåan","Trean"};
+//    private String[] MountainLocations = {"Norrut","Söderut","Västerut"};
+//    private int[] MountainSizes = {90,270,360};
+//    private ArrayList<String> listData = new ArrayList<>(Arrays.asList(MountainNames));
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        ArrayAdapter<String> mountainAdapter =
-                new ArrayAdapter<String>(this, R.layout.layout_list_mountains, listData);
-
-        ListView thelistview = (ListView) findViewById(R.id.my_listview);
-        thelistview.setAdapter(mountainAdapter);
-
-
-        thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                Toast.makeText(getApplicationContext(),"Hello",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        final Button button = findViewById(R.id.button_execute);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                new JsonTask().execute("https://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
-            }
-        });
-
-    }
 
 
 }
