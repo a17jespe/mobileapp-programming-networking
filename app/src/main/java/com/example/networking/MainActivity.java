@@ -92,21 +92,14 @@ public class MainActivity extends AppCompatActivity {
 
         ListView thelistview = (ListView) findViewById(R.id.my_listview);
         thelistview.setAdapter(mountainAdapter);
-//        String TAG = "Testing:";
-//
-//        for (int i = 0;i < 2; i++){
-//            Log.e(TAG, listData.get(i));
-//        }
 
 
-
-//        my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener());{
-//            @override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-//                Toast.makeText(getApplicationContext(),"Hello",Toast.LENGTH_SHORT).show();
-//            }
-//        }
-
+        thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                Toast.makeText(getApplicationContext(),"Hello",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         final Button button = findViewById(R.id.button_execute);
         button.setOnClickListener(new View.OnClickListener() {
