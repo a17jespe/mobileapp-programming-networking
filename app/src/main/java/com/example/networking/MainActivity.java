@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint({"StaticFieldLeak"})
+    @SuppressLint("StaticFieldLeak")
     private class JsonTask extends AsyncTask<String, String, String> {
 
         private HttpURLConnection connection = null;
