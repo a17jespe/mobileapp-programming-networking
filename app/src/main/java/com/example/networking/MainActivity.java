@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,12 +19,33 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public class ArrayList<Mountain> {
+//    private ArrayList<Mountain> ;
 
+    private String[] MountainNames = {"Ettan","Tvåan","Trean"};
+    private String[] MoutainLocations = {"Norrut","Söderut","Västerut"};
+    private int[] MountainSizes = {90,270,360};
+
+    private ArrayList<String> listData = new ArrayList<>(Arrays.asList(MountainNames));
+
+    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.layout_list_mountains, R.id.layout_list_mountains_xml,listData);
+
+    ListView my_listview = (ListView) findViewById(R.id.my_listview);
+
+//    my_listview.setAdapter(ArrayAdapter);
+
+
+
+
+
+
+//    public class ArrayList<Mountain> {
+//
 //        private String ID;
 //        private String name;
 //        private String type;
@@ -32,14 +55,10 @@ public class MainActivity extends AppCompatActivity {
 //        private Integer cost;
 //        private String img;
 //        private String aux;
-
-    }
-
-    public class ArrayAdapter<Mountain>{
+//
+//    }
 
 
-
-    }
 
 
     @SuppressLint("StaticFieldLeak")
@@ -85,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String json) {
             Log.d("TAG", json);
+
         }
     }
 
