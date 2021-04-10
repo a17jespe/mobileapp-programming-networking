@@ -28,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.jar.Attributes;
 
@@ -35,9 +36,11 @@ import java.util.jar.Attributes;
 public class MainActivity extends AppCompatActivity {
 
 
-    private ArrayList<Object> mountainArrayList = new ArrayList<>(Arrays.asList());
-    private ArrayAdapter<Mountain> mountainArrayAdapter;
+//    private final String[] Testing = {" Test", "test" , "test"};
 
+    private ArrayList<Mountain> mountainArrayList = new ArrayList<Mountain>(); // Most likely the cause of my issues
+
+    private ArrayAdapter<Mountain> mountainArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mountainArrayList = new ArrayList<>();
-        mountainArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_list_mountains, mountainArrayList);
+        mountainArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_list_mountains,R.id.layouttextview , mountainArrayList);
 
         ListView thelistview = (ListView) findViewById(R.id.my_listview);
         thelistview.setAdapter(mountainArrayAdapter);
@@ -57,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Log.e("TOAST", String.valueOf(position));
-//                String name = mountainArrayList.get(position).getmountain("name");
-//                String height = mountainArrayList.get(position).getmountain("height");
-//                String location = mountainArrayList.get(position).getmountain("location");
-//                Log.e("TOAST NAME", name+height+location);
-//                String message = "The mountain " +  name + " exists in " + location + " and has a height of " + height + "m.";
-//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                String name = mountainArrayList.get(position).getmountain("name");
+                String height = mountainArrayList.get(position).getmountain("height");
+                String location = mountainArrayList.get(position).getmountain("location");
+                Log.e("TOAST NAME", name+height+location);
+                String message = "The mountain " +  name + " exists in " + location + " and has a height of " + height + "m.";
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -134,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
                             Integer height = oneObject.getInt("size");
                     Log.e("oneObject: ", String.valueOf(oneObject));
 
-//                    mountainArrayList.add(new Mountain(name, location, height)); //Adds a new mountain in arraylist with name, location and height (int) values.
-                    Log.e("mountainArrayList(i): ", String.valueOf(mountainArrayList.get(i)));
+                    mountainArrayList.add(new Mountain(name, location, height)); //Adds a new mountain in arraylist with name, location and height (int) values.
+
+//                    Log.e("mountainArrayList(i): ", String.valueOf(mountainArrayList.get(i)));
+//                    Log.e("mountainArrayList(i): ", String.valueOf(mountainArrayList.get(i).getmountain("name")));
                 }
 //                Log.e("mountainArrayAdapter: ", String.valueOf(mountainArrayAdapter));
                 mountainArrayAdapter.notifyDataSetChanged();

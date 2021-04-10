@@ -15,33 +15,40 @@ public class Mountain {
 //        private Integer cost;
 //        private String img;
 //        private String aux;
-        private String mountainName;
-        private String mountainLocation;
-        private Integer mountainHeight;
+        public String mountainName;
+        public String mountainLocation;
+        public Integer mountainHeight;
+        private Object Mountain;
 
-        public Mountain (String name, String location, Integer height){
+        public Mountain(String name, String location, Integer height){
 
                 mountainName = name;
                 mountainLocation = location;
                 mountainHeight = height;
                 Log.e("MOUNTAIN NAME: ", String.valueOf(mountainName));
 
+        }
 
-
+        public Object ReturnMountain(){
+                return Mountain;
         }
 
 
 
-
-        public String getmountains(){
-                String str = mountainName;
-                str+=" has a height of ";
-                str+=mountainHeight;
-                str+=" and is located in ";
-                str+=mountainLocation;
-                return str;
-        }
-
+//        public String GetName(){
+//                return mountainName;
+//        }
+//
+//
+//        public String getmountains(){
+//                String str = mountainName;
+//                str+=" has a height of ";
+//                str+=mountainHeight;
+//                str+=" and is located in ";
+//                str+=mountainLocation;
+//                return str;
+//        }
+//
         public String getmountain(String which){
 
                 switch (which) {
