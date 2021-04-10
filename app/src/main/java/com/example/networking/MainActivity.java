@@ -33,13 +33,50 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-//    String ID, name, location, type;
-//    Integer height;
-//
-//    Mountain mountainClass = new Mountain(ID, name, location, height, type);
 
     private ArrayList<Mountain> mountainArrayList;
     private ArrayAdapter<Mountain> mountainArrayAdapter;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        mountainArrayList = new ArrayList<>();
+        mountainArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_list_mountains, R.id.layoutlistmountains_xml, mountainArrayList);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ListView thelistview = (ListView) findViewById(R.id.my_listview);
+        thelistview.setAdapter(mountainArrayAdapter);
+
+
+        thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                Log.e("TOAST", String.valueOf(position));
+                String name = mountainArrayList.get(position).getmountain("name");
+                String height = mountainArrayList.get(position).getmountain("height");
+                String location = mountainArrayList.get(position).getmountain("location");
+                Log.e("TOAST NAME", name+height+location);
+                String message = "The mountain " +  name + " exists in the area " + location + " and has a height of " + height + "m.";
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button button = findViewById(R.id.button_execute);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                new JsonTask().execute("https://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
+
+            }
+        });
+
+    }
+
+
+
 
     @SuppressLint("StaticFieldLeak")
     private class JsonTask extends AsyncTask<String, String, String> {
@@ -98,10 +135,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("oneObject: ", String.valueOf(oneObject));
 
                     mountainArrayList.add(new Mountain(name, location, height)); //Adds a new mountain in arraylist with name, location and height (int) values.
-
                     Log.e("mountainArrayList(i): ", String.valueOf(mountainArrayList.get(i)));
                 }
-                Log.e("mountainArrayAdapter: ", String.valueOf(mountainArrayAdapter));
+//                Log.e("mountainArrayAdapter: ", String.valueOf(mountainArrayAdapter));
                 mountainArrayAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
@@ -111,42 +147,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
 
-        mountainArrayList = new ArrayList<>();
-        mountainArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_list_mountains, mountainArrayList);
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ListView thelistview = (ListView) findViewById(R.id.my_listview);
-        thelistview.setAdapter(mountainArrayAdapter);
-
-
-        thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                Log.e("TOAST", String.valueOf(position));
-                String name = mountainArrayList.get(position).getmountain("name");
-                String height = mountainArrayList.get(position).getmountain("height");
-                String location = mountainArrayList.get(position).getmountain("location");
-                Log.e("TOAST NAME", name+height+location);
-                String message = "The mountain " +  name + " exists in the area " + location + " and has a height of " + height + "m.";
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Button button = findViewById(R.id.button_execute);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                new JsonTask().execute("https://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
-
-            }
-        });
-
-    }
 
     // Old code
 
