@@ -29,38 +29,40 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.Attributes;
 
 
 public class MainActivity extends AppCompatActivity {
 
 
-    private ArrayList<Mountain> mountainArrayList;
+    private ArrayList<Object> mountainArrayList = new ArrayList<>(Arrays.asList());
     private ArrayAdapter<Mountain> mountainArrayAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        mountainArrayList = new ArrayList<>();
-        mountainArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_list_mountains, R.id.layoutlistmountains_xml, mountainArrayList);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        mountainArrayList = new ArrayList<>();
+        mountainArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_list_mountains, mountainArrayList);
+
         ListView thelistview = (ListView) findViewById(R.id.my_listview);
         thelistview.setAdapter(mountainArrayAdapter);
-
 
         thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Log.e("TOAST", String.valueOf(position));
-                String name = mountainArrayList.get(position).getmountain("name");
-                String height = mountainArrayList.get(position).getmountain("height");
-                String location = mountainArrayList.get(position).getmountain("location");
-                Log.e("TOAST NAME", name+height+location);
-                String message = "The mountain " +  name + " exists in the area " + location + " and has a height of " + height + "m.";
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+//                String name = mountainArrayList.get(position).getmountain("name");
+//                String height = mountainArrayList.get(position).getmountain("height");
+//                String location = mountainArrayList.get(position).getmountain("location");
+//                Log.e("TOAST NAME", name+height+location);
+//                String message = "The mountain " +  name + " exists in " + location + " and has a height of " + height + "m.";
+//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -127,14 +129,12 @@ public class MainActivity extends AppCompatActivity {
                 for (int i=0; i < jsonArray.length(); i++) // Goes through i in array based on array length.
                 {
                     JSONObject oneObject = jsonArray.getJSONObject(i); //Assigns object to variable based on current object in the array jsonArray.
-//                            String ID = oneObject.getString("ID");
                             String name = oneObject.getString("name");
                             String location = oneObject.getString("location");
-//                            String type = "a17jespe"; // As requested on lenasys
                             Integer height = oneObject.getInt("size");
                     Log.e("oneObject: ", String.valueOf(oneObject));
 
-                    mountainArrayList.add(new Mountain(name, location, height)); //Adds a new mountain in arraylist with name, location and height (int) values.
+//                    mountainArrayList.add(new Mountain(name, location, height)); //Adds a new mountain in arraylist with name, location and height (int) values.
                     Log.e("mountainArrayList(i): ", String.valueOf(mountainArrayList.get(i)));
                 }
 //                Log.e("mountainArrayAdapter: ", String.valueOf(mountainArrayAdapter));
