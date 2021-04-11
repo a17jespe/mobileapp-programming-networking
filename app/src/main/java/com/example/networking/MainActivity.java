@@ -36,10 +36,7 @@ import java.util.jar.Attributes;
 public class MainActivity extends AppCompatActivity {
 
 
-//    private final String[] Testing = {" Test", "test" , "test"};
-
-    private ArrayList<Mountain> mountainArrayList = new ArrayList<Mountain>(); // Most likely the cause of my issues
-
+    private ArrayList<Mountain> mountainArrayList = new ArrayList<>();
     private ArrayAdapter<Mountain> mountainArrayAdapter;
 
     @Override
@@ -59,11 +56,9 @@ public class MainActivity extends AppCompatActivity {
         thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                Log.e("TOAST", String.valueOf(position));
                 String name = mountainArrayList.get(position).getmountain("name");
                 String height = mountainArrayList.get(position).getmountain("height");
                 String location = mountainArrayList.get(position).getmountain("location");
-                Log.e("TOAST NAME", name+height+location);
                 String message = "The mountain " +  name + " exists in " + location + " and has a height of " + height + "m.";
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
@@ -135,40 +130,14 @@ public class MainActivity extends AppCompatActivity {
                             String name = oneObject.getString("name");
                             String location = oneObject.getString("location");
                             Integer height = oneObject.getInt("size");
-                    Log.e("oneObject: ", String.valueOf(oneObject));
-
                     mountainArrayList.add(new Mountain(name, location, height)); //Adds a new mountain in arraylist with name, location and height (int) values.
 
-//                    Log.e("mountainArrayList(i): ", String.valueOf(mountainArrayList.get(i)));
-//                    Log.e("mountainArrayList(i): ", String.valueOf(mountainArrayList.get(i).getmountain("name")));
                 }
-//                Log.e("mountainArrayAdapter: ", String.valueOf(mountainArrayAdapter));
                 mountainArrayAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
                 Log.e("JSON Stuff: ",e.getMessage());
             }
-
         }
     }
-
-
-
-    // Old code
-
-//    private String[] MountainNames = {"Ettan","Tvåan","Trean"};
-//    private String[] MountainLocations = {"Norrut","Söderut","Västerut"};
-//    private int[] MountainSizes = {90,270,360};
-//    private ArrayList<String> listData = new ArrayList<>(Arrays.asList(MountainNames));
-
-
-    // Line 100
-    //
-//                    Mountain MountainInfo = new Mountain (name,location,height);
-//                    Log.e("MountainInfo: ", String.valueOf(MountainInfo));
-//                    mountainArrayList.add(MountainInfo);
-
-
-
-
 }
