@@ -4,32 +4,32 @@ import android.util.Log;
 
 public class Mountain {
 
-        public String mountainName;
-        public String mountainLocation;
-        public Integer mountainHeight;
+        private String Name;
+        private String Location;
+        private Integer Height;
 
         public Mountain(String name, String location, Integer height){
 
-                mountainName = name;
-                mountainLocation = location;
-                mountainHeight = height;
+                Name = name;
+                Location = location;
+                Height = height;
 
         }
 
         @Override
         public String toString(){
-                return mountainName;
+                return Name;
         }
 
-        public String getmountain(String which){
+        public String getName(){
+                return Name;
+        }
 
-                switch (which) {
-                        case "height":
-                                return String.valueOf(mountainHeight);
-                        case "location":
-                                return mountainLocation;
-                        default:
-                                return mountainName;
-                }
+        public String getLocation(){
+                return Location;
+        }
+
+        public String getHeight(){
+                return String.valueOf(Height);
         }
 }

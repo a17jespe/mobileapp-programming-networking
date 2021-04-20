@@ -81,9 +81,9 @@ And here are the results, with toast message included, implemented through a lis
         thelistview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                String name = mountainArrayList.get(position).getmountain("name");
-                String height = mountainArrayList.get(position).getmountain("height");
-                String location = mountainArrayList.get(position).getmountain("location");
+                String name = mountainArrayList.get(position).getName();
+                String height = mountainArrayList.get(position).getHeight();
+                String location = mountainArrayList.get(position).getLocation();
                 String message = "The mountain " +  name + " exists in " + location + " and has a height of " + height + "m.";
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
